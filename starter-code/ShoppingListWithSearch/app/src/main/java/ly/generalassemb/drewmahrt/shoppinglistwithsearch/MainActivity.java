@@ -8,13 +8,18 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private ListView mShoppingListView;
@@ -43,16 +48,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+//        super.onNewIntent(intent);
         handleIntent(intent);
     }
 
     public void handleIntent(Intent intent){
+//        Toast.makeText(MainActivity.this, "Toast from outside if statement", Toast.LENGTH_SHORT).show();
+
         if (Intent.ACTION_SEARCH.equals( intent.getAction() )){
             String query = intent.getStringExtra(SearchManager.QUERY);
             Cursor cursor = ShoppingSQLiteOpenHelper.getInstance(this).searchShoppingList(query);
-//            TextView results = (TextView)findViewById(R.id.textView);
-//            results.setText(cursor);
+            mCursorAdapter.swapCursor(cursor);
 
         }
     }
@@ -69,4 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+
 }
